@@ -1,0 +1,5 @@
+grub-efi-amd64-signed (2.99-8) unstable; urgency=medium
+
+  * Add TrueNAS grub signing package
+
+ -- Ameer Hamza <ahamza@ixsystems.com>  Wed, 23 Apr 2025 04:12:00 +0200

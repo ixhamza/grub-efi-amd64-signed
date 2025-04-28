@@ -1,9 +1,26 @@
 #!/usr/bin/make -f
 
 SIG_DIR := debian/signatures/grub-efi-amd64-bin
+KEY_FILE := debian/MOK.key
+CERT_FILE := debian/MOK.pem
 
 %:
 	dh $@
+
+override_dh_auto_build:
+	# Clean previous artifacts
+	rm -rf $(SIG_DIR) debian/tmp
+	
+	# Create directory structure
+	mkdir -p $(SIG_DIR)/usr/lib/grub/x86_64-efi/monolithic
+	
+	for efi in /usr/lib/grub/x86_64-efi/monolithic/*.efi; do \
+		bsname=$$(basename $$efi); \
+		sbsign --key $(KEY_FILE) --cert $(CERT_FILE) --output "$${bsname}.signed" "$$efi"; \
+		sbattach --detach "$(SIG_DIR)/usr/lib/grub/x86_64-efi/monolithic/$${bsname}.sig" \
+			"$${bsname}.signed"; \
+		rm -f "$${bsname}.signed"; \
+	done
 
 override_dh_auto_install:
 	set -e ; \

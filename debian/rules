@@ -1,8 +1,8 @@
 #!/usr/bin/make -f
 
 SIG_DIR := debian/signatures/grub-efi-amd64-bin
-KEY_FILE := debian/MOK.key
-CERT_FILE := debian/MOK.pem
+KEY_FILE := debian/Rolling.key
+CERT_FILE := debian/Rolling-signed.pem
 
 %:
 	dh $@
